@@ -44,14 +44,12 @@ const applyKnotOrCross = (() => {
     document.querySelector('.grid').addEventListener('click', (event) => {
         if (currentPlayer == p1) {
             placeKnot(event);
-            updatePlayerTurns(event, currentPlayer);
-            checkWinner()
+            checkWinner(currentPlayer);
             currentPlayer = p2;
         } 
         else {
             placeCross(event);
-            updatePlayerTurns(event);
-            checkWinner()
+            checkWinner(currentPlayer);
             currentPlayer = p1;
         }
     });
@@ -60,6 +58,7 @@ const applyKnotOrCross = (() => {
         const image = document.createElement('img')
         image.src  = "knot.png";
         image.classList.add("knot");
+        image.classList.add("p1")
         event.target.appendChild(image);
     }
 
@@ -67,12 +66,14 @@ const applyKnotOrCross = (() => {
         const image = document.createElement('img')
         image.src  = "cross.png";
         image.classList.add("cross");
+        image.classList.add("p2")
         event.target.appendChild(image);
     };
  
 })();
 
-const checkWinner = () => {
+const checkWinner = (currentPlayer) => {
+
     const winningCombo = [
         [1, 4, 7],
         [2, 5, 8],
@@ -84,17 +85,28 @@ const checkWinner = () => {
         [3, 5, 7]
     ];
 
-    for (let i = 0; winningCombo.length > i; i++) {
-        if ((winningCombo[i][0] == "something") && 
-        (winningCombo[i][1] == "something") && 
-        (winningCombo[i][2] == "something")) {
-            alert(`${currentPlayer} is the winner`)
-        }
-    }
+
+    winningCombo.forEach((combo) => {
+
+        let counter = 0;
+
+        combo.forEach((value) => {
+
+            let cells = Array.from(document.querySelectorAll(".square"));
+
+            if (cells[value].classList.contains(currentPlayer)) {
+
+                counter++;
+
+                if (counter == 3 ){
+
+                alert(`${currentPlayer} is the winner`);
+                return;
+                
+                }
+            }
+        });
+    });
 }
 
-const updatePlayerTurns = (event) => {
-    let tileId = event.target.id;
-    console.log(currentPlayer.turns) = currentPlayer.turns.push(tileId);
-}
 
