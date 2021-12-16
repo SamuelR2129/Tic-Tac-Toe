@@ -8,13 +8,22 @@
 </head>
 <body>
     <main>
-        <div class="grid">
+        <section id="main-game-section" hidden>
+            <div class="grid">
             
-        </div>
-        <div id="start-btn">
-            <button >START</button>
-        </div>
-
+            </div>
+            <div id="reset-btn-container">
+                <button id="reset-btn">RESET</button>
+            </div>
+        </section>
+        
+        <section class="player-input-container">
+            <div class="player-name">Player One: </div>
+            <input type="text" id="player-one-input" class="player-name-input" name="player-one-input">
+            <div class="player-name">Player Two: </div>
+            <input type="text" id="player-two-input" class="player-name-input" name="player-two-input">
+            <button id="start-btn">BEGIN!</button>
+        </section>
     </main>
 
 
