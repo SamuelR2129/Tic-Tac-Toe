@@ -29,10 +29,14 @@ const gameboard = (() => {
         squareDiv.setAttribute("id", boardTileId);
         grid.appendChild(squareDiv);
     }
-
 })();
 
+
+
 //CREATES PLAYERS AND CONTROLS THE GAME WITH BUTTONS
+let p1;
+let p2;
+let currentPlayer;
 
 const playerControler = (() => {
     
@@ -40,6 +44,9 @@ const playerControler = (() => {
     document.getElementById('start-btn').addEventListener('click', () => {
         document.querySelector("#main-game-section").hidden = false;
         document.querySelector(".player-input-container").style.display = "none";
+
+        createPlayer();
+
     }, true);
 
     //player builder
@@ -50,33 +57,50 @@ const playerControler = (() => {
 
 })();
 
-const p1 = player("sam");
-const p2 = player("jack");
+const createPlayer = () => {
+    let playerNames = [];
+
+    const getUserNames = ((playerNames) => {
+        playerNames.push(document.getElementById('player-one-input').value);
+        playerNames.push(document.getElementById('player-two-input').value);
+        return playerNames;
+    })(playerNames);
+
+    p1 = player(playerNames[0]);
+    p2 = player(playerNames[1]);
+
+    document.getElementById("tally-p1").textContent = p1.name;
+    document.getElementById("tally-p2").textContent = p2.name;
 
 
-const applyKnotOrCross = (() => {
-    let currentPlayer = p1
+    return currentPlayer = p1 
+}
+
+
+
+
+const applyKnotOrCross = ((currentPlayer) => {
     let cells = Array.from(document.querySelectorAll(".square"));
 
 
     //add knots or crosses
     document.querySelector('.grid').addEventListener('click', (event) => {
-        if (currentPlayer == p1 && (event.target.childNodes =! "img")) {
+        if (currentPlayer == p1) {
             placeKnot(event);
             checkWinner(currentPlayer, cells);
             checkTie(cells);
-            currentPlayer = p2;
+            return currentPlayer = p2;
         } 
-        else if (event.target.childNodes =! "img") {
+        else {
             placeCross(event);
             checkWinner(currentPlayer, cells);
             checkTie(cells);
-            currentPlayer = p1;
+            return currentPlayer = p1;
         }
     });
 
-    function placeKnot (event){
-        const image = document.createElement('img')
+    function placeKnot (event, target){
+        const image = document.createElement('img');
         image.src  = "knot.png";
         image.classList.add("knot");
         image.classList.add("p1")
@@ -84,7 +108,7 @@ const applyKnotOrCross = (() => {
     }
 
     function placeCross (event){
-        const image = document.createElement('img')
+        const image = document.createElement('img');
         image.src  = "cross.png";
         image.classList.add("cross");
         image.classList.add("p2")
@@ -103,8 +127,12 @@ const applyKnotOrCross = (() => {
     document.getElementById("reset-btn").addEventListener("click", () => {
         restartBoard(cells);
     });
+
  
 })();
+
+let p1Score = "";
+let p2Score = "";
 
 const checkWinner = (currentPlayer, cells) => {
 
@@ -118,7 +146,6 @@ const checkWinner = (currentPlayer, cells) => {
         [1, 5, 9],
         [3, 5, 7]
     ];
-
 
     winningCombo.forEach((combo) => {
 
@@ -139,6 +166,7 @@ const checkWinner = (currentPlayer, cells) => {
 
             if (Xcounter == 3 || Ocounter == 3) {
                 alert(`${currentPlayer.name} is the winner`);
+                playerScore(currentPlayer, p1Score, p2Score);
                 restartBoard(cells);
                 Xcounter = 0;
                 Ocounter = 0;
@@ -157,4 +185,18 @@ const restartBoard = (cells) => {
             img[0].parentNode.removeChild(img[0]);
         }
     });
+}
+
+const playerScore = (currentPlayer, p1Score, p2Score) => {
+
+    if (currentPlayer == p1) {
+        p1Score = p1Score + 1;
+        document.getElementById("p1-tally-num").textContent = p1Score;
+        return p1Score;
+    }
+    else {
+        p2Score = p2Score + 1;
+        document.getElementById("p2-tally-num").textContent = p2Score;
+        return p2Score;
+    }
 }

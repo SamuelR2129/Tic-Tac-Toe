@@ -7,7 +7,32 @@ body {
     padding: 0;
     height: 100%;
     background:grey;
+    font-size: 36px;
 
+}
+
+.stopClick {
+    pointer-events: none
+}
+
+.game-tally {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.tally-player-name {
+    width: auto;
+    height: 50px;
+    margin: 0 15px;
+}
+
+.tally-number {
+    height: 50px;
+    width: 50px;
+    background: lightgray;
+    text-align: center;
 }
 
 .grid {
@@ -17,6 +42,10 @@ body {
     flex-wrap: wrap;
     margin: 50px auto 0 auto;
 
+}
+
+.cross .knot {
+    pointer-events: none;
 }
 
 .square {
