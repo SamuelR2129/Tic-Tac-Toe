@@ -38,6 +38,7 @@ let p1;
 let p2;
 let currentPlayer;
 
+
 const playerControler = (() => {
     
     //start button
@@ -83,20 +84,21 @@ const applyKnotOrCross = ((currentPlayer) => {
     let cells = Array.from(document.querySelectorAll(".square"));
 
 
+
     //add knots or crosses
     document.querySelector('.grid').addEventListener('click', (event) => {
-        if (currentPlayer == p1) {
-            placeKnot(event);
-            checkWinner(currentPlayer, cells);
-            checkTie(cells);
-            return currentPlayer = p2;
-        } 
-        else {
-            placeCross(event);
-            checkWinner(currentPlayer, cells);
-            checkTie(cells);
-            return currentPlayer = p1;
-        }
+            if (currentPlayer == p1) {
+                placeKnot(event);
+                checkWinner(currentPlayer, cells);
+                checkTie(cells);
+                return currentPlayer = p2;
+            } 
+            else {
+                placeCross(event);
+                checkWinner(currentPlayer, cells);
+                checkTie(cells);
+                return currentPlayer = p1;
+            }
     });
 
     function placeKnot (event, target){
@@ -131,9 +133,6 @@ const applyKnotOrCross = ((currentPlayer) => {
  
 })();
 
-let p1Score = "";
-let p2Score = "";
-
 const checkWinner = (currentPlayer, cells) => {
 
     const winningCombo = [
@@ -166,17 +165,36 @@ const checkWinner = (currentPlayer, cells) => {
 
             if (Xcounter == 3 || Ocounter == 3) {
                 alert(`${currentPlayer.name} is the winner`);
-                playerScore(currentPlayer, p1Score, p2Score);
+                playerScore(currentPlayer);
                 restartBoard(cells);
                 Xcounter = 0;
                 Ocounter = 0;
-                return;
+                
             }
         });
 
     });
     
 }
+
+let p1Score = 0;
+let p2Score = 0;
+
+const playerScore = (currentPlayer) => {
+
+
+    if (currentPlayer == p1) {
+        ++p1Score;
+        document.getElementById("p1-tally-num").textContent = p1Score;
+        return p1Score; 
+    }
+    else {
+        ++p2Score;
+        document.getElementById("p2-tally-num").textContent = p2Score;
+        return p2Score;
+    }
+}
+
 
 const restartBoard = (cells) => {
     let img = document.getElementsByTagName("img");
@@ -185,18 +203,4 @@ const restartBoard = (cells) => {
             img[0].parentNode.removeChild(img[0]);
         }
     });
-}
-
-const playerScore = (currentPlayer, p1Score, p2Score) => {
-
-    if (currentPlayer == p1) {
-        p1Score = p1Score + 1;
-        document.getElementById("p1-tally-num").textContent = p1Score;
-        return p1Score;
-    }
-    else {
-        p2Score = p2Score + 1;
-        document.getElementById("p2-tally-num").textContent = p2Score;
-        return p2Score;
-    }
 }

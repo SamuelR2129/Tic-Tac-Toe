@@ -8,7 +8,6 @@ body {
     height: 100%;
     background:grey;
     font-size: 36px;
-
 }
 
 .stopClick {
@@ -33,6 +32,8 @@ body {
     width: 50px;
     background: lightgray;
     text-align: center;
+    margin: 0 5px 0 5px;
+    padding-top: 4px;
 }
 
 .grid {
@@ -40,8 +41,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    margin: 50px auto 0 auto;
-
+    top: 102px;
+    position: absolute;
 }
 
 .cross .knot {
