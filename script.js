@@ -42,11 +42,15 @@ let currentPlayer;
 const playerControler = (() => {
     
     //start button
-    document.getElementById('start-btn').addEventListener('click', () => {
+    document.getElementById('start-btn').addEventListener('click', (event) => {
+        event.preventDefault();
         document.querySelector("#main-game-section").hidden = false;
         document.querySelector(".player-input-container").style.display = "none";
 
         createPlayer();
+
+
+
 
     }, true);
 
@@ -87,6 +91,10 @@ const applyKnotOrCross = ((currentPlayer) => {
 
     //add knots or crosses
     document.querySelector('.grid').addEventListener('click', (event) => {
+       let specificImg = document.querySelector(".square");
+       console.log(specificImg);
+
+        //if (!specificImg.hasChildNodes()) {
             if (currentPlayer == p1) {
                 placeKnot(event);
                 checkWinner(currentPlayer, cells);
@@ -99,6 +107,8 @@ const applyKnotOrCross = ((currentPlayer) => {
                 checkTie(cells);
                 return currentPlayer = p1;
             }
+        //}
+
     });
 
     function placeKnot (event, target){
